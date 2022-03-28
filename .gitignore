@@ -1,0 +1,4 @@
+.*.png
+meta
+cifar*
+*-checkpoint*
