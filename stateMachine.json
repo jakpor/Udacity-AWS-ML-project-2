@@ -1,0 +1,60 @@
+{
+  "Comment": "A state machine for Udacity project no 2",
+  "StartAt": "SerializeData",
+  "States": {
+    "SerializeData": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::lambda:invoke",
+      "Parameters": {
+        "Payload.$": "$",
+        "FunctionName": "arn:aws:lambda:us-east-1:071394031625:function:serializeImageData:$LATEST"
+      },
+      "Retry": [
+        {
+          "ErrorEquals": [
+            "Lambda.ServiceException",
+            "Lambda.AWSLambdaException",
+            "Lambda.SdkClientException"
+          ],
+          "IntervalSeconds": 2,
+          "MaxAttempts": 6,
+          "BackoffRate": 2
+        }
+      ],
+      "Next": "ClassifyImage",
+      "OutputPath": "$.Payload.body"
+    },
+    "ClassifyImage": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::lambda:invoke",
+      "OutputPath": "$.Payload.body",
+      "Parameters": {
+        "Payload.$": "$",
+        "FunctionName": "arn:aws:lambda:us-east-1:071394031625:function:classifyImageData:$LATEST"
+      },
+      "Retry": [
+        {
+          "ErrorEquals": [
+            "Lambda.ServiceException",
+            "Lambda.AWSLambdaException",
+            "Lambda.SdkClientException"
+          ],
+          "IntervalSeconds": 2,
+          "MaxAttempts": 6,
+          "BackoffRate": 2
+        }
+      ],
+      "Next": "FilterLowConfidence"
+    },
+    "FilterLowConfidence": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::lambda:invoke",
+      "OutputPath": "$.Payload.body",
+      "Parameters": {
+        "Payload.$": "$",
+        "FunctionName": "arn:aws:lambda:us-east-1:071394031625:function:filterLowConfidence:$LATEST"
+      },
+      "End": true
+    }
+  }
+}
