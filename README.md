@@ -1,10 +1,15 @@
-# Udacity-Developing-Your-First-ML-Workflow
-This is the Github repo for Udacity Developing your first ML workflow course. This repo contains the code for demos, exercises and the final project,
-## Folder Structure
-This repo contains a folder for each lesson and one project folder.
+# Udacity-AWS-ML-project-2
+This is my submission to the AWS Machine Learning nanodegree  - project 2
 
-## Lessons Folder
-Each lesson folder contains files for exercises and demos. The exercise code should contain instructions necessary for the exercises along with the solution. The demo code contains the files the instructor uses in the lesson demos.
+## Project structure
+Main Python notebook for the project is named [`starter.ipynb`](./starter.ipynb)
 
-## Project Folder
-The project folder contains all files and instructions necessary for the project.
+AWS lambda functions are in three python files: 
+* [`serializeImageData.py`](./serializeImageData.py),
+* [`classifyimageData.py`](./classifyimageData.py),
+* [`filterLowConfidence.py`](./filterLowConfidence.py)
+
+Step function code file: [`stateMachine.json`](./stateMachine.json). Graph:
+
+![stateMachine](./stepfunctions_graph.png)
+
